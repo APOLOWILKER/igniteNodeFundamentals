@@ -10,6 +10,7 @@ const users = []
 
 // CommomJS => require  antigo
 // ESModules => import/export
+
 /**
  * Por padrão o Node utiliza o require,
  * e o ESModule não é suportado.
@@ -29,11 +30,12 @@ const server = http.createServer((request, response ) => {
       name: 'John Doe',
       email: 'johndoes@example.com'
     })
-    return response.end( 'Criação de ursers')
+
+    return response.writeHead(201).end()
   }
 
 // early return
-  return response.end('Hellow World!!! mae')
+  return response.writeHead(404).end('Erro na aplicação')
 })
 
 server.listen(PORT)
