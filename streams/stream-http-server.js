@@ -15,10 +15,20 @@ class InverseNumberStream extends Transform {
 // request => ReadableStream
 // response => WritableStream
 
-const server = http.createServer((request, response) => {
-  return request
-    .pipe(new InverseNumberStream())
-    .pipe(response)
+const server = http.createServer(async (request, response) => {
+  const buffers = []
+
+  // await para stream
+  // fica esperando até ler todos os dados da stream
+  for await (const chunk of request) {
+    buffers.push(chunk)
+  }
+
+  const fullStreamContent = Buffer.concat(buffers).toString()
+
+  console.log(fullStreamContent);
+
+  return response.end(fullStreamContent)
 })
 
 server.listen(3334)
