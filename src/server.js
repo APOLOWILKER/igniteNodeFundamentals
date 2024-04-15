@@ -9,6 +9,19 @@ import { routes } from "./routes.js"
 
 const PORT = 3333
 
+/**
+ * Tenho 3 tipos de dados que a aplicação front envia informações
+ * Query parameters: URL Stateful: usado para Filtros, paginação, e muitas vezes não obrigatórios.
+ *       http://localhost:3333/users?userId=1&name=diego
+ *
+ * Route Parameters: Identificação de recurso
+ *        http://localhost:3333/users/1
+ *
+ * Request Body(HTTPs): Envio de informações de um formulário
+ *      POST  http://localhost:3333/users
+ *
+ */
+
 // CommomJS => require  antigo
 // ESModules => import/export
 
