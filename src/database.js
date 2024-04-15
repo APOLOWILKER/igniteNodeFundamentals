@@ -8,7 +8,7 @@ const dataBasePath = new URL('../db.json', import.meta.url)
  * isso esta definindo onde vou criar o arquivo
  */
 
-console.log(dataBasePath)
+// console.log(dataBasePath)
 
 export class Database {
   #database = {} // metodo private no js e com #
