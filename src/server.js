@@ -35,12 +35,17 @@ const server = http.createServer( async (request, response ) => {
 
   await json(request, response)
 
-  const route = routes
-  .find(route => {
-    return route.method === method && route.path === url
+  const route = routes.find(route => {
+    return route.method === method && route.path.test(url)
+    // uso test pq toda regex tem o metodo test que retorna true ou false
   })
 
   if (route) {
+    const routeParams = request.url.match(route.path)
+
+    request.params = { ...routeParams.groups }
+
+    console.log(routeParams)
     return route.handler(request, response)
   }
 
