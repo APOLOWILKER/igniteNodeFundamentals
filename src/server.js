@@ -3,11 +3,11 @@
 // import http from 'http'
 // por padrão o node solicita utilizar node: antes dos imports para diferenciar seus modulos
 import http from 'node:http'
+
 import { json } from "./middlewares/json.js"
+import { routes } from "./routes.js"
 
 const PORT = 3333
-
-const users = []
 
 // CommomJS => require  antigo
 // ESModules => import/export
@@ -22,22 +22,16 @@ const server = http.createServer( async (request, response ) => {
 
   await json(request, response)
 
-  if (method === 'GET' && url === '/users' ) {
-    return response
-    .setHeader('Content-type', 'application/json')
-    .end(JSON.stringify(users))
+  const route = routes
+  .find(route => {
+    return route.method === method && route.path === url
+  })
+
+  if (route) {
+    return route.handler(request, response)
   }
 
-  if (method === 'POST' &&  url === '/users') {
-    const {name, email} = request.body
-    users.push({
-      id: 1,
-      name,
-      email,
-    })
-
-    return response.writeHead(201).end()
-  }
+  console.log(route)
 
 // early return
   return response.writeHead(404).end('Erro na aplicação')
