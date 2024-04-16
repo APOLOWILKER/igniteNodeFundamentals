@@ -7,7 +7,7 @@ export function buildRoutePath(path) {
   // log do mapeamento da rota
   // [ [ ':id', 'id', index: 7, input: '/users/:id', groups: undefined ] ]
 
-  const pathRegex =  new RegExp(`^${pathWithParams}`)
+  const pathRegex =  new RegExp(`^${pathWithParams}(?<query>\\?(.*))?$`)
 
   return pathRegex
 }

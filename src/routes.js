@@ -10,7 +10,12 @@ export const routes = [
     method:'GET',
     path: buildRoutePath('/users'),
     handler: (request, response) => {
-      const users = database.select('users')
+      const { search } = request.query
+
+      const users = database.select('users', search ? {
+        name: search,
+        email: search,
+      } : null)
 
 
     return response
@@ -32,6 +37,21 @@ export const routes = [
      database.insert('users', user)
 
      return response.writeHead(201).end()
+    }
+  },
+  {
+    method: 'PUT',
+    path: buildRoutePath('/users/:id'),
+    handler: (request, response) => {
+      const { id } = request.params
+      const { name, email } = request.body
+
+      database.update('users', id, {
+        name,
+        email
+      })
+
+      return response.writeHead(204).end()
     }
   },
   {
